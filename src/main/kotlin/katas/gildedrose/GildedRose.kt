@@ -27,17 +27,15 @@ class GildedRose(internal var items: Array<Item>) {
             if (item.quality < 50) {
                 increaseQuality(item)
 
-                if (item.name == CONCERT_TICKETS) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            increaseQuality(item)
-                        }
+                if (item.sellIn < 11) {
+                    if (item.quality < 50) {
+                        increaseQuality(item)
                     }
+                }
 
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            increaseQuality(item)
-                        }
+                if (item.sellIn < 6) {
+                    if (item.quality < 50) {
+                        increaseQuality(item)
                     }
                 }
             }

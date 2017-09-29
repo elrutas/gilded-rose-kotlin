@@ -20,14 +20,12 @@ class GildedRose(internal var items: Array<Item>) {
                     increaseQuality(item)
                 }
             } else if (item.name == CONCERT_TICKETS) {
-                increaseQuality(item)
-
-                if (item.sellIn < 11) {
+                if (item.sellIn > 10) {
                     increaseQuality(item)
-                }
-
-                if (item.sellIn < 6) {
-                    increaseQuality(item)
+                } else if (item.sellIn in 6..10) {
+                    increaseQuality(item, 2)
+                } else if (item.sellIn < 6) {
+                    increaseQuality(item, 3)
                 }
                 decreaseSellIn(item)
                 if (itemExpired(item)) {
@@ -54,6 +52,6 @@ private fun decreaseQuality(item: Item) {
     item.quality = (item.quality - 1).coerceAtLeast(0)
 }
 
-private fun increaseQuality(item: Item) {
-    item.quality = (item.quality + 1).coerceAtMost(50)
+private fun increaseQuality(item: Item, amount: Int = 1) {
+    item.quality = (item.quality + amount).coerceAtMost(50)
 }

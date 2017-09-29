@@ -2,10 +2,14 @@ package katas.gildedrose
 
 class GildedRose(internal var items: Array<Item>) {
 
+    val CONCERT_TICKETS = "Backstage passes to a TAFKAL80ETC concert"
+    val AGED_BRIE = "Aged Brie"
+    val SULFURAS = "Sulfuras, Hand of Ragnaros"
+
     fun updateQuality() {
         for (i in items.indices) {
             val item = items[i]
-            if (item.name == "Sulfuras, Hand of Ragnaros") {
+            if (item.name == SULFURAS) {
                 continue
             }
 
@@ -15,11 +19,11 @@ class GildedRose(internal var items: Array<Item>) {
     }
 
     private fun updateQuality(item: Item) {
-        if (item.name == "Aged Brie" || item.name == "Backstage passes to a TAFKAL80ETC concert") {
+        if (item.name == AGED_BRIE || item.name == CONCERT_TICKETS) {
             if (item.quality < 50) {
                 increaseQuality(item)
 
-                if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+                if (item.name == CONCERT_TICKETS) {
                     if (item.sellIn < 11) {
                         if (item.quality < 50) {
                             increaseQuality(item)
@@ -44,11 +48,11 @@ class GildedRose(internal var items: Array<Item>) {
         item.sellIn = item.sellIn - 1
 
         if (itemExpired(item)) {
-            if (item.name == "Aged Brie") {
+            if (item.name == AGED_BRIE) {
                 if (item.quality < 50) {
                     increaseQuality(item)
                 }
-            } else if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+            } else if (item.name == CONCERT_TICKETS) {
                 item.quality = 0
             } else {
                 if (item.quality > 0) {

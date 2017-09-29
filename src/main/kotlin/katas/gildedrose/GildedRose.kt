@@ -6,7 +6,7 @@ class GildedRose(internal var items: Array<Item>) {
         for (i in items.indices) {
             val item = items[i]
             if (item.name == "Sulfuras, Hand of Ragnaros") {
-                break
+                continue
             }
 
             updateQuality(item)

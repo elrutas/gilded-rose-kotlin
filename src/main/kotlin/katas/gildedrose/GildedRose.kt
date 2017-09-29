@@ -19,7 +19,11 @@ class GildedRose(internal var items: Array<Item>) {
     }
 
     private fun updateQuality(item: Item) {
-        if (item.name == AGED_BRIE || item.name == CONCERT_TICKETS) {
+        if (item.name == AGED_BRIE) {
+            if (item.quality < 50) {
+                increaseQuality(item)
+            }
+        } else if (item.name == CONCERT_TICKETS) {
             if (item.quality < 50) {
                 increaseQuality(item)
 

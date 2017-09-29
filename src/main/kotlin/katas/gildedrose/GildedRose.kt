@@ -20,29 +20,19 @@ class GildedRose(internal var items: Array<Item>) {
 
     private fun updateQuality(item: Item) {
         if (item.name == AGED_BRIE) {
-            if (item.quality < 50) {
+            increaseQuality(item)
+        } else if (item.name == CONCERT_TICKETS) {
+            increaseQuality(item)
+
+            if (item.sellIn < 11) {
                 increaseQuality(item)
             }
-        } else if (item.name == CONCERT_TICKETS) {
-            if (item.quality < 50) {
+
+            if (item.sellIn < 6) {
                 increaseQuality(item)
-
-                if (item.sellIn < 11) {
-                    if (item.quality < 50) {
-                        increaseQuality(item)
-                    }
-                }
-
-                if (item.sellIn < 6) {
-                    if (item.quality < 50) {
-                        increaseQuality(item)
-                    }
-                }
             }
         } else {
-            if (item.quality > 0) {
-                decreaseQuality(item)
-            }
+            decreaseQuality(item)
         }
     }
 
@@ -51,15 +41,11 @@ class GildedRose(internal var items: Array<Item>) {
 
         if (itemExpired(item)) {
             if (item.name == AGED_BRIE) {
-                if (item.quality < 50) {
-                    increaseQuality(item)
-                }
+                increaseQuality(item)
             } else if (item.name == CONCERT_TICKETS) {
                 item.quality = 0
             } else {
-                if (item.quality > 0) {
-                    decreaseQuality(item)
-                }
+                decreaseQuality(item)
             }
         }
     }
@@ -68,9 +54,13 @@ class GildedRose(internal var items: Array<Item>) {
 private fun itemExpired(item: Item) = item.sellIn < 0
 
 private fun decreaseQuality(item: Item) {
-    item.quality = item.quality - 1
+    if (item.quality > 0) {
+        item.quality = item.quality - 1
+    }
 }
 
 private fun increaseQuality(item: Item) {
-    item.quality = item.quality + 1
+    if (item.quality < 50) {
+        item.quality = item.quality + 1
+    }
 }

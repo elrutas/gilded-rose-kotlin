@@ -13,41 +13,38 @@ class GildedRose(internal var items: Array<Item>) {
                 continue
             }
 
-            updateQuality(item)
-            updateSellIn(item)
-        }
-    }
-
-    private fun updateQuality(item: Item) {
-        if (item.name == AGED_BRIE) {
-            increaseQuality(item)
-        } else if (item.name == CONCERT_TICKETS) {
-            increaseQuality(item)
-
-            if (item.sellIn < 11) {
-                increaseQuality(item)
-            }
-
-            if (item.sellIn < 6) {
-                increaseQuality(item)
-            }
-        } else {
-            decreaseQuality(item)
-        }
-    }
-
-    private fun updateSellIn(item: Item) {
-        item.sellIn = item.sellIn - 1
-
-        if (itemExpired(item)) {
             if (item.name == AGED_BRIE) {
                 increaseQuality(item)
+                decreaseSellIn(item)
+                if (itemExpired(item)) {
+                    increaseQuality(item)
+                }
             } else if (item.name == CONCERT_TICKETS) {
-                item.quality = 0
+                increaseQuality(item)
+
+                if (item.sellIn < 11) {
+                    increaseQuality(item)
+                }
+
+                if (item.sellIn < 6) {
+                    increaseQuality(item)
+                }
+                decreaseSellIn(item)
+                if (itemExpired(item)) {
+                    item.quality = 0
+                }
             } else {
                 decreaseQuality(item)
+                decreaseSellIn(item)
+                if (itemExpired(item)) {
+                    decreaseQuality(item)
+                }
             }
         }
+    }
+
+    private fun decreaseSellIn(item: Item) {
+        item.sellIn = item.sellIn - 1
     }
 }
 

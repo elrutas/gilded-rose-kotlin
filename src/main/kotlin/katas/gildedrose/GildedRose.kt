@@ -5,6 +5,10 @@ class GildedRose(internal var items: Array<Item>) {
     fun updateQuality() {
         for (i in items.indices) {
             val item = items[i]
+            if (item.name == "Sulfuras, Hand of Ragnaros") {
+                break
+            }
+
             if (item.name == "Aged Brie" || item.name == "Backstage passes to a TAFKAL80ETC concert") {
                 if (item.quality < 50) {
                     increaseQuality(item)
@@ -23,8 +27,6 @@ class GildedRose(internal var items: Array<Item>) {
                         }
                     }
                 }
-            } else if (item.name == "Sulfuras, Hand of Ragnaros") {
-
             } else {
                 if (item.quality > 0) {
                     decreaseQuality(item)

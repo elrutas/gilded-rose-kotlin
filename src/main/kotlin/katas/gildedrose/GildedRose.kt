@@ -43,29 +43,28 @@ class GildedRose(internal var items: Array<Item>) {
     private fun updateSellIn(item: Item) {
         item.sellIn = item.sellIn - 1
 
-
-        if (item.sellIn < 0) {
+        if (itemExpired(item)) {
             if (item.name == "Aged Brie") {
                 if (item.quality < 50) {
                     increaseQuality(item)
                 }
+            } else if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+                item.quality = 0
             } else {
-                if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-                    item.quality = item.quality - item.quality
-                } else {
-                    if (item.quality > 0) {
-                        decreaseQuality(item)
-                    }
+                if (item.quality > 0) {
+                    decreaseQuality(item)
                 }
             }
         }
     }
+}
 
-    private fun decreaseQuality(item: Item) {
-        item.quality = item.quality - 1
-    }
+private fun itemExpired(item: Item) = item.sellIn < 0
 
-    private fun increaseQuality(item: Item) {
-        item.quality = item.quality + 1
-    }
+private fun decreaseQuality(item: Item) {
+    item.quality = item.quality - 1
+}
+
+private fun increaseQuality(item: Item) {
+    item.quality = item.quality + 1
 }

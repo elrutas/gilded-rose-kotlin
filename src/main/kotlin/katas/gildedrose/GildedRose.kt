@@ -7,18 +7,18 @@ class GildedRose(internal var items: Array<Item>) {
             val item = items[i]
             if (item.name == "Aged Brie" || item.name == "Backstage passes to a TAFKAL80ETC concert") {
                 if (item.quality < 50) {
-                    item.quality = item.quality + 1
+                    increaseQuality(item)
 
                     if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
                         if (item.sellIn < 11) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1
+                                increaseQuality(item)
                             }
                         }
 
                         if (item.sellIn < 6) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1
+                                increaseQuality(item)
                             }
                         }
                     }
@@ -27,7 +27,7 @@ class GildedRose(internal var items: Array<Item>) {
 
             } else {
                 if (item.quality > 0) {
-                    item.quality = item.quality - 1
+                    decreaseQuality(item)
                 }
             }
 
@@ -40,7 +40,7 @@ class GildedRose(internal var items: Array<Item>) {
                     if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
                         if (item.quality > 0) {
                             if (item.name != "Sulfuras, Hand of Ragnaros") {
-                                item.quality = item.quality - 1
+                                decreaseQuality(item)
                             }
                         }
                     } else {
@@ -48,10 +48,18 @@ class GildedRose(internal var items: Array<Item>) {
                     }
                 } else {
                     if (item.quality < 50) {
-                        item.quality = item.quality + 1
+                        increaseQuality(item)
                     }
                 }
             }
         }
+    }
+
+    private fun decreaseQuality(item: Item) {
+        item.quality = item.quality - 1
+    }
+
+    private fun increaseQuality(item: Item) {
+        item.quality = item.quality + 1
     }
 }

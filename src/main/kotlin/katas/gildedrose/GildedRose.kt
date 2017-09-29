@@ -47,9 +47,7 @@ class GildedRose(internal var items: Array<Item>) {
                         item.quality = item.quality - item.quality
                     } else {
                         if (item.quality > 0) {
-                            if (item.name != "Sulfuras, Hand of Ragnaros") {
-                                decreaseQuality(item)
-                            }
+                            decreaseQuality(item)
                         }
                     }
                 }

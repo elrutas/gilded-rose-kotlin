@@ -54,13 +54,9 @@ class GildedRose(internal var items: Array<Item>) {
 private fun itemExpired(item: Item) = item.sellIn < 0
 
 private fun decreaseQuality(item: Item) {
-    if (item.quality > 0) {
-        item.quality = item.quality - 1
-    }
+    item.quality = (item.quality - 1).coerceAtLeast(0)
 }
 
 private fun increaseQuality(item: Item) {
-    if (item.quality < 50) {
-        item.quality = item.quality + 1
-    }
+    item.quality = (item.quality + 1).coerceAtMost(50)
 }

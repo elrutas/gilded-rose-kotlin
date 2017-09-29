@@ -13,31 +13,41 @@ class GildedRose(internal var items: Array<Item>) {
                 continue
             }
 
-            if (item.name == AGED_BRIE) {
-                increaseQuality(item)
-                decreaseSellIn(item)
-                if (itemExpired(item)) {
-                    increaseQuality(item)
-                }
-            } else if (item.name == CONCERT_TICKETS) {
-                if (item.sellIn > 10) {
-                    increaseQuality(item)
-                } else if (item.sellIn in 6..10) {
-                    increaseQuality(item, 2)
-                } else if (item.sellIn < 6) {
-                    increaseQuality(item, 3)
-                }
-                decreaseSellIn(item)
-                if (itemExpired(item)) {
-                    item.quality = 0
-                }
-            } else {
-                decreaseQuality(item)
-                decreaseSellIn(item)
-                if (itemExpired(item)) {
-                    decreaseQuality(item)
-                }
+            when (item.name) {
+                CONCERT_TICKETS -> updateConcertTickets(item)
+                AGED_BRIE -> updateBrie(item)
+                else -> updateItem(item)
             }
+        }
+    }
+
+    private fun updateItem(item: Item) {
+        decreaseQuality(item)
+        decreaseSellIn(item)
+        if (itemExpired(item)) {
+            decreaseQuality(item)
+        }
+    }
+
+    private fun updateBrie(item: Item) {
+        increaseQuality(item)
+        decreaseSellIn(item)
+        if (itemExpired(item)) {
+            increaseQuality(item)
+        }
+    }
+
+    private fun updateConcertTickets(item: Item) {
+        if (item.sellIn > 10) {
+            increaseQuality(item)
+        } else if (item.sellIn in 6..10) {
+            increaseQuality(item, 2)
+        } else if (item.sellIn < 6) {
+            increaseQuality(item, 3)
+        }
+        decreaseSellIn(item)
+        if (itemExpired(item)) {
+            item.quality = 0
         }
     }
 
